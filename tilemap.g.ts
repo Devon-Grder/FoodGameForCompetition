@@ -144,7 +144,7 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 `, [myTiles.transparency16,myTiles.tile26,myTiles.tile27,myTiles.tile28,myTiles.tile29,myTiles.tile31,sprites.castle.tilePath2,myTiles.tile30], TileScale.Sixteen);
         }
         return null;
