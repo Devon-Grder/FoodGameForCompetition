@@ -13,6 +13,8 @@ namespace SpriteKind {
     export const VegWheatBreadKind = SpriteKind.create()
     export const VegRyeBread = SpriteKind.create()
     export const DoorLabel = SpriteKind.create()
+    export const FruitSprite = SpriteKind.create()
+    export const Cows = SpriteKind.create()
 }
 function Nutrition () {
     VegTotalCalories = 0
@@ -185,6 +187,9 @@ function VegLettuce () {
     tiles.placeOnTile(VegLettuce1, tiles.getTileLocation(10, 10))
     VegLettuce1.scale = 0.75
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.FruitSprite, function (sprite, otherSprite) {
+    FruitsCollected += 1
+})
 function VegWhiteBreadOnMeal4 () {
     VegWhiteBreadOnMeal = sprites.create(img`
         ........................................................................................................................
@@ -252,6 +257,9 @@ function VegWhiteBreadOnMeal4 () {
     VegWhiteBreadOnMeal.scale = 1
     sprites.destroy(VegWhiteBread1)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`VegSpawnHeroTile1`, function (sprite, location) {
+    StartDairyGame()
+})
 function VegLettuceOnMeal () {
     VegLettuceOnMeal1 = sprites.create(img`
         ................777...77.77.....777...77.77.....777...77.77.....777...77.77.....
@@ -348,6 +356,54 @@ function VegWheatBreadOnMeal3 () {
     VegWheatBreadOnMeal.scale = 1
     sprites.destroy(VegWheatBread1)
 }
+function CheckDairyAnswer (Healthy: boolean) {
+    if (Healthy == true) {
+        if (ChosenDairy == "2% Low-fat") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Skim Milk") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Cheese") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Yogurt") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else {
+            game.splash("Incorrect")
+            Correct_Answers += -1
+        }
+    }
+    if (Healthy == false) {
+        if (ChosenDairy == "Whole Milk") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Ice Cream") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Milk and Cereal") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else if (ChosenDairy == "Butter") {
+            game.splash("Correct")
+            Correct_Answers += 1
+        } else {
+            game.splash("Incorrect")
+            Correct_Answers += -1
+        }
+    }
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
+    CheckDairyAnswer(false)
+    if (Correct_Answers >= 5) {
+        game.splash("Well Done!")
+        DairyGameCompleted = true
+    }
+    if (DairyGameCompleted == true && FruitGameCompleted == true) {
+        StartProtienGame()
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, location) {
     VegChangeCameraPers()
 })
@@ -379,6 +435,132 @@ function SpawnVegHero () {
     scene.cameraFollowSprite(VegHero)
     controller.moveSprite(VegHero)
     VegHero.ay = 0
+}
+function StartProtienGame () {
+    ClearScreen()
+    SpawnVegHero()
+    scene.setBackgroundImage(img`
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7776677777777767777777777777777777777777777667777777776777777777777777777777777777766777777777677777777777777777777777777776677777777767777777777777777777777777
+        7666777777777667777777777777777777777767766677777777766777777777777777777777776776667777777776677777777777777777777777677666777777777667777777777777777777777767
+        7767766777667766777766777777777777777766776776677766776677776677777777777777776677677667776677667777667777777777777777667767766777667766777766777777777777777766
+        6666667767766766776766777777777777776676666666776776676677676677777777777777667666666677677667667767667777777777777766766666667767766766776766777777777777776676
+        6666677766766666766667777777777777666677666667776676666676666777777777777766667766666777667666667666677777777777776666776666677766766666766667777777777777666677
+        6666676666666676666677767777776667776667666667666666667666667776777777666777666766666766666666766666777677777766677766676666676666666676666677767777776667776667
+        6666666666666776677666667766677766777666666666666666677667766666776667776677766666666666666667766776666677666777667776666666666666666776677666667766677766777666
+        6666666666666766667766677677667766666666666666666666676666776667767766776666666666666666666667666677666776776677666666666666666666666766667766677677667766666666
+        66b666666666666666666667667776676666666666b666666666666666666667667776676666666666b666666666666666666667667776676666666666b6666666666666666666676677766766666666
+        66b6666666666666666666666b6776666666666666b6666666666666666666666b6776666666666666b6666666666666666666666b6776666666666666b6666666666666666666666b67766666666666
+        66b6666666666666666666666bb676666666666666b6666666666666666666666bb676666666666666b6666666666666666666666bb676666666666666b6666666666666666666666bb6766666666666
+        66b66666669bb666666669966bbb66666666666666b66666669bb666666669966bbb66666666666666b66666669bb666666669966bbb66666666666666b66666669bb666666669966bbb666666666666
+        66b66666699dbb666666dd9666bb66666666666666b666666999bb666666999666bb66666666666666b666666999bb666666999666bb66666666666666b666666999bb666666999666bb666666666666
+        6bb6669669966bbb69666d9966bb6666666666666bb6669669966bbb69666d9966bb6666666666666bb6669669966bbb69666d9966bb6666666666666bb6669669966bbb69666d9966bb666666666666
+        6bb666d96696d9bbb9966d9966bbb666666666666bb666d96696d9bbb9966d9966bbb666666666666bb666d96696d9bbb9966d9966bbb666666666666bb666d96696d9bbb9966d9966bbb66666666666
+        6bb66dd9999d996bb99ddd96666bb666666666666bb66dd9999d996bb99ddd96666bb666666666666bb66dd9999d996bb99ddd96666bb666666666666bb66dd9999d996bb99ddd96666bb66666666666
+        bbb666d9999d996bb99dd99669dbbb6696666666bbb666d9999d996bb99dd99669dbbb6696666666bbb666d9999d996bb99dd99669dbbb6696666666bbb666d9999d996bb99dd99669dbbb6696666666
+        bbbdd6d9999d999bbb9dd999996bbb6699966666bbbdd6d9999d999bbb9dd999996bbb6699966666bbbdd6d9999d999bbb9dd999996bbb6699966666bbbdd6d9999d999bbb9dd999996bbb6699966666
+        bbb6ddd9999d9999bb9dd9999d6bbb9699666666bbb6ddd9999d9999bb9dd9999d6bbb9699666666bbb6ddd9999d9999bb9dd9999d6bbb9699666666bbb6ddd9999d9999bb9dd9999d6bbb9699666666
+        bbb6ddd999d99999bbbdd9999d9bbb9999669966bbb6ddd999d99999bbbdd9999d9bbb9999669966bbb6ddd999d99999bbbdd9999d9bbb9999669966bbb6ddd999d99999bbbdd9999d9bbb9999669966
+        bbbdddd999d999999bbdd9999d9bbbb9999d9996bbbdddd999d999999bbdd9999d9bbbb9999d9996bbbdddd999d999999bbdd9999d9bbbb9999d9996bbbdddd999d999999bbdd9999d9bbbb9999d9996
+        bb9dddd99dd9999999bb9999dd9bbbb9999d9999bb9dddd99dd9999999bb9999dd9bbbb9999d9999bb9dddd99dd9999999bb9999dd9bbbb9999d9999bb9dddd99dd9999999bb9999dd9bbbb9999d9999
+        bb99ddddd999999999bbb999d999bbb9999d9999bb99ddddd999999999bbb999d999bbb9999d9999bb99ddddd999999999bbb999d999bbb9999d9999bb99ddddd999999999bbb999d999bbb9999d9999
+        bb99dddd9999999999dbbbbdd999bbb9999d999bbb99dddd9999999999dbbbbdd999bbb9999d999bbb99dddd9999999999dbbbbdd999bbb9999d999bbb99dddd9999999999dbbbbdd999bbb9999d999b
+        bb99ddd99999999999ddbbbb9999bbbb999d999bbb99ddd99999999999ddbbbb9999bbbb999d999bbb99ddd99999999999ddbbbb9999bbbb999d999bbb99ddd99999999999ddbbbb9999bbbb999d999b
+        bb99ddd99999999999ddbbbbbb99bbbb999d999bbb99ddd99999999999ddbbbbbb99bbbb999d999bbb99ddd99999999999ddbbbbbb99bbbb999d999bbb99ddd99999999999ddbbbbbb99bbbb999d999b
+        b9999dd9999999999ddddbbbbbbbbbbbb999d99bb9999dd9999999999ddddbbbbbbbbbbbb999d99bb9999dd9999999999ddddbbbbbbbbbbbb999d99bb9999dd9999999999ddddbbbbbbbbbbbb999d99b
+        b9999ddd999999999dd99999bbbbbbbbb999d99bb9999ddd999999999dd99999bbbbbbbbb999d99bb9999ddd999999999dd99999bbbbbbbbb999d99bb9999ddd999999999dd99999bbbbbbbbb999d99b
+        b9999dddd99999999dd999999bbbbbbbb999d9bbb9999dddd99999999dd999999bbbbbbbb999d9bbb9999dddd99999999dd999999bbbbbbbb999d9bbb9999dddd99999999dd999999bbbbbbbb999d9bb
+        b9999ddddd999999ddd9999999bbbbbbb999dbbbb9999ddddd999999ddd9999999bbbbbbb999dbbbb9999ddddd999999ddd9999999bbbbbbb999dbbbb9999ddddd999999ddd9999999bbbbbbb999dbbb
+        dd99999ddddd9999ddd999999999bbbbb999bbbbdd99999ddddd9999ddd999999999bbbbb999bbbbdd99999ddddd9999ddd999999999bbbbb999bbbbdd99999ddddd9999ddd999999999bbbbb999bbbb
+        9d99999ddddddd9ddd9999999999bbbbb99bbbb99d99999ddddddd9ddd9999999999bbbbb99bbbb99d99999ddddddd9ddd9999999999bbbbb99bbbb99d99999ddddddd9ddd9999999999bbbbb99bbbb9
+        9d999999dddddddddd9999999999bbbbb99bbb999d999999dddddddddd9999999999bbbbb99bbb999d999999dddddddddd9999999999bbbbb99bbb999d999999dddddddddd9999999999bbbbb99bbb99
+        9d999999ddddddddd99999999999bbbbb99bb9999d999999ddddddddd99999999999bbbbb99bb9999d999999ddddddddd99999999999bbbbb99bb9999d999999ddddddddd99999999999bbbbb99bb999
+        9dd99999ddddddd9999999999999bbbbb99bbd999dd99999ddddddd9999999999999bbbbb99bbd999dd99999ddddddd9999999999999bbbbb99bbd999dd99999ddddddd9999999999999bbbbb99bbd99
+        99dd9999dddddd99999999999999bbbbb99bbd9999dd9999dddddd99999999999999bbbbb99bbd9999dd9999dddddd99999999999999bbbbb99bbd9999dd9999dddddd99999999999999bbbbb99bbd99
+        99ddd999dddddd99999999999999bbbbb9bbbdd999ddd999dddddd99999999999999bbbbb9bbbdd999ddd999dddddd99999999999999bbbbb9bbbdd999ddd999dddddd99999999999999bbbbb9bbbdd9
+        9999dddddddddd9999999999999bbbbbb9bbb9d99999dddddddddd9999999999999bbbbbb9bbb9d99999dddddddddd9999999999999bbbbbb9bbb9d99999dddddddddd9999999999999bbbbbb9bbb9d9
+        9999dddddddddd9999999999999bbbbbbbbb99d99999dddddddddd9999999999999bbbbbbbbb99d99999dddddddddd9999999999999bbbbbbbbb99d99999dddddddddd9999999999999bbbbbbbbb99d9
+        999999dddddddd9999999999999bbbbbbbbb99dd999999dddddddd9999999999999bbbbbbbbb99dd999999dddddddd9999999999999bbbbbbbbb99dd999999dddddddd9999999999999bbbbbbbbb99dd
+        d9999999dddddd999999999999bbbbbbbbb9999dd9999999dddddd999999999999bbbbbbbbb9999dd9999999dddddd999999999999bbbbbbbbb9999dd9999999dddddd999999999999bbbbbbbbb9999d
+        dd9999999ddddd999999999999bbbbbbbbb99999dd9999999ddddd999999999999bbbbbbbbb99999dd9999999ddddd999999999999bbbbbbbbb99999dd9999999ddddd999999999999bbbbbbbbb99999
+        dd9999999ddddd999999999999bbbbbbbb999999dd9999999ddddd999999999999bbbbbbbb999999dd9999999ddddd999999999999bbbbbbbb999999dd9999999ddddd999999999999bbbbbbbb999999
+        9d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb999999
+        9d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb999999
+        9d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb999999
+        9d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb9999999d9999999ddddd99999999999bbbbbbbbb999999
+        9dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb9999999
+        9dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb99999999dd999999ddddd99999999999bbbbbbbb9999999
+        ddd999999ddddd99999999999bbbbbbbb9999999ddd999999ddddd99999999999bbbbbbbb9999999ddd999999ddddd99999999999bbbbbbbb9999999ddd999999ddddd99999999999bbbbbbbb9999999
+        dd9999999ddddd99999999999bbbbbbbb9999999dd9999999ddddd99999999999bbbbbbbb9999999dd9999999ddddd99999999999bbbbbbbb9999999dd9999999ddddd99999999999bbbbbbbb9999999
+        dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999
+        dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999dd9999999dddddd9999999999bbbbbbbb9999999
+        dd9999999dddddd9999999999bbbbbbb99999999dd9999999dddddd9999999999bbbbbbb99999999dd9999999dddddd9999999999bbbbbbb99999999dd9999999dddddd9999999999bbbbbbb99999999
+        d99999999dddddd9999999999bbbbbbb9999999dd99999999dddddd9999999999bbbbbbb9999999dd99999999dddddd9999999999bbbbbbb9999999dd99999999dddddd9999999999bbbbbbb9999999d
+        d99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999dd
+        d99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999ddd99999999dddddd9999999999bbbbbbb999999dd
+        999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd
+        999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd
+        999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd999999999ddddddd999999999bbbbbbb99999ddd
+        999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd
+        999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd999999999dddddddd99999999bbbbbbb9999dddd
+        999999999dddddddd99999999bbbbbbb9999ddd9999999999dddddddd99999999bbbbbbb9999ddd9999999999dddddddd99999999bbbbbbb9999ddd9999999999dddddddd99999999bbbbbbb9999ddd9
+        9999999999dddddddd999999bbbbbbbb9999ddd99999999999dddddddd999999bbbbbbbb9999ddd99999999999dddddddd999999bbbbbbbb9999ddd99999999999dddddddd999999bbbbbbbb9999ddd9
+        d999999999dddddddd999999bbbbbbbbddddddddd999999999dddddddd999999bbbbbbbbddddddddd999999999dddddddd999999bbbbbbbbddddddddd999999999dddddddd999999bbbbbbbbdddddddd
+        ddddd99999dddddddd999999bbbbbbbbbdddddddddddd99999dddddddd999999bbbbbbbbbdddddddddddd99999dddddddd999999bbbbbbbbbdddddddddddd99999dddddddd999999bbbbbbbbbddddddd
+        dddddddd99ddddddddd999ddbbbbbbbbbddddddddddddddd99ddddddddd999ddbbbbbbbbbddddddddddddddd99ddddddddd999ddbbbbbbbbbddddddddddddddd99ddddddddd999ddbbbbbbbbbddddddd
+        ddddddddddddddddddd9ddddbbbbbbbbbdddddddddddddddddddddddddd9ddddbbbbbbbbbdddddddddddddddddddddddddd9ddddbbbbbbbbbdddddddddddddddddddddddddd9ddddbbbbbbbbbddddddd
+        ddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbdddddd
+        ddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbddddddddddddddddddddddddddddddbbbbbbbbbbdddddd
+        dddddddddddddddddddddddbbbbbbbbbbbdddddddddddddddddddddddddddddbbbbbbbbbbbdddddddddddddddddddddddddddddbbbbbbbbbbbdddddddddddddddddddddddddddddbbbbbbbbbbbdddddd
+        dddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddd
+        dddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddd
+        dddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddd
+        dddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddddddddddddddddddddddddddbbbbbbbbbbbbddddd
+        ddddddddddddddddddd7777777777bbbbbbdddddddddddddddddddddddd7777777777bbbbbbdddddddddddddddddddddddd7777777777bbbbbbdddddddddddddddddddddddd7777777777bbbbbbddddd
+        dddddddddddddd77777777777777777777bddddddddddddddddddd77777777777777777777bddddddddddddddddddd77777777777777777777bddddddddddddddddddd77777777777777777777bddddd
+        ddddddddddd7777777777777777777777777ddddddddddddddd7777777777777777777777777ddddddddddddddd7777777777777777777777777ddddddddddddddd7777777777777777777777777dddd
+        dddddddd777777777777777777777777777777dddddddddd777777777777777777777777777777dddddddddd777777777777777777777777777777dddddddddd777777777777777777777777777777dd
+        ddddd77777777777777777777777777777777777ddddd77777777777777777777777777777777777ddddd77777777777777777777777777777777777ddddd77777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
+        `)
 }
 function VegCarrotOnMeal () {
     VegCarrotOnMeal1 = sprites.create(img`
@@ -797,6 +979,120 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     scene.cameraFollowSprite(VegHero)
 })
+function StartDairyGame () {
+    Correct_Answers = 0
+    ClearScreen()
+    SpawnVegHero()
+    tiles.placeOnTile(VegHero, tiles.getTileLocation(3, 7))
+    tiles.setCurrentTilemap(tilemap`level7`)
+    MilkCowSprite = sprites.create(img`
+        ................................
+        ................................
+        ................................
+        ..............ffffff............
+        ...........fffeeee11fff.........
+        ...........fffeeee11fff.........
+        ........fff111eeee11111fff......
+        .......f1111eeeeeee11111eef.....
+        ......feeeeefffeeeefffeeeeef....
+        ......feeeef55feeeef55feeeef....
+        ......feeeef55feeeef55feeeef....
+        ....ffefffff55ffffff55fffffeff..
+        ....fffeeeeeeeeeeeeeeeeeeeefff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffeeeeeeeee11eeeeeeeeefff..
+        ....ffeffffeeefe11efeeeffffeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeff12221111112221ffeeff..
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        .......fff1333f3333f3331fff.....
+        ........fff333333333333fff......
+        ........ffffffffffffffffff......
+        ..........feeef....feeef........
+        ..........feeef....feeef........
+        ...........ffff....ffff.........
+        ................................
+        ................................
+        `, SpriteKind.Cows)
+    IceCreamCowSprite = sprites.create(img`
+        ................................
+        ................................
+        ................................
+        ..............ffffff............
+        ...........fffeeee11fff.........
+        ...........fffeeee11fff.........
+        ........fff111eeee11111fff......
+        .......f1111eeeeeee11111eef.....
+        ......feeeeefffeeeefffeeeeef....
+        ......feeeef55feeeef55feeeef....
+        ......feeeef55feeeef55feeeef....
+        ....ffefffff55ffffff55fffffeff..
+        ....fffeeeeeeeeeeeeeeeeeeeefff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffeeeeeeeee11eeeeeeeeefff..
+        ....ffeffffeeefe11efeeeffffeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeff12221111112221ffeeff..
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        .......fff1333f3333f3331fff.....
+        ........fff333333333333fff......
+        ........ffffffffffffffffff......
+        ..........feeef....feeef........
+        ..........feeef....feeef........
+        ...........ffff....ffff.........
+        ................................
+        ................................
+        `, SpriteKind.Cows)
+    RandomCowSprite = sprites.create(img`
+        ................................
+        ................................
+        ................................
+        ..............ffffff............
+        ...........fffeeee11fff.........
+        ...........fffeeee11fff.........
+        ........fff111eeee11111fff......
+        .......f1111eeeeeee11111eef.....
+        ......feeeeefffeeeefffeeeeef....
+        ......feeeef55feeeef55feeeef....
+        ......feeeef55feeeef55feeeef....
+        ....ffefffff55ffffff55fffffeff..
+        ....fffeeeeeeeeeeeeeeeeeeeefff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffeeeeeeeee11eeeeeeeeefff..
+        ....ffeffffeeefe11efeeeffffeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeff12221111112221ffeeff..
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        .......fff1333f3333f3331fff.....
+        ........fff333333333333fff......
+        ........ffffffffffffffffff......
+        ..........feeef....feeef........
+        ..........feeef....feeef........
+        ...........ffff....ffff.........
+        ................................
+        ................................
+        `, SpriteKind.Cows)
+    CowArray = [MilkCowSprite, IceCreamCowSprite, RandomCowSprite]
+    for (let value of tiles.getTilesByType(assets.tile`myTile23`)) {
+        CowArrayIndex = 0
+        tiles.placeOnTile(CowArray[CowArrayIndex], value)
+    }
+}
 function VegCarrot () {
     VegCarrot1 = sprites.create(img`
         .............777
@@ -826,7 +1122,29 @@ function VegCarrot () {
     tiles.placeOnTile(VegCarrot1, tiles.getTileLocation(10, 12))
     VegCarrot1.scale = 0.5
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Cows, function (sprite, otherSprite) {
+    ChosenDairy = ""
+    if (otherSprite == MilkCowSprite) {
+        MilkList = ["2% Low-fat", "Whole Milk", "Skim Milk"]
+        ChosenDairy = MilkList[randint(0, MilkList.length)]
+        game.splash(ChosenDairy)
+    } else if (otherSprite == IceCreamCowSprite) {
+        ChosenDairy = "Ice Cream"
+        game.splash("Ice Cream")
+    } else if (otherSprite == RandomCowSprite) {
+        RandomDairyList = [
+        "Milk and Cereal",
+        "Cheese",
+        "Yogurt",
+        "Butter"
+        ]
+        ChosenDairy = RandomDairyList[randint(0, RandomDairyList.length)]
+        game.splash(ChosenDairy)
+    }
+})
 function StartScreen () {
+    FruitGameCompleted = false
+    DairyGameCompleted = false
     game.showLongText("Welcome to Food Fest!", DialogLayout.Center)
     pause(100)
     game.showLongText("You will be partaking in 4 games to learn about how different foods affect your body", DialogLayout.Center)
@@ -837,7 +1155,7 @@ function StartScreen () {
     pause(100)
     game.showLongText("Following you will milk cows and place the corresponding dairy food in healthy or unhealthy categories", DialogLayout.Center)
     pause(100)
-    game.showLongText("Finally you will have to chose the correct protein source in a hunting style point and click game.", DialogLayout.Center)
+    game.showLongText("Finally you will have to chose the correct protein source in a Scavenger hunt for the 5 Proteins", DialogLayout.Center)
     pause(100)
     game.showLongText("Good Luck!", DialogLayout.Center)
 }
@@ -905,6 +1223,197 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.VegRyeBread, function (sprite, o
     VegRyeBreadOnMeal5()
     VegChangeCalories(VegCalories[6])
 })
+function SpawnFruits () {
+    WaterMelonSprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . f 7 . . . . 
+        . . . . . . . . . 2 3 f 7 . . . 
+        . . . . . . . . 2 2 3 3 f 7 . . 
+        . . . . . . . 2 2 2 2 1 f 7 . . 
+        . . . . . . 2 2 f 2 2 1 f 7 . . 
+        . . . . . 2 2 2 2 2 2 1 f 7 . . 
+        . . . . . 2 2 2 f 2 2 1 f 7 . . 
+        . . . . 2 2 2 2 2 2 3 1 f 7 . . 
+        . . . 2 2 2 f 2 2 2 1 f 7 . . . 
+        . . f 3 3 2 2 2 3 1 f 7 7 . . . 
+        . . 7 f 3 1 1 1 1 f 7 7 . . . . 
+        . . . 7 f f f f f 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.FruitSprite)
+    AppleSprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . 7 . . . . . . 
+        . . . . . . . . 7 . . . . . . . 
+        . . . . . . . . 7 . . . . . . . 
+        . . . . . . . 7 7 . . . . . . . 
+        . . . . 2 2 2 7 7 2 2 2 . . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . . 2 2 2 2 2 2 2 2 . . . . 
+        . . . . . 2 2 . . 2 2 . . . . . 
+        `, SpriteKind.FruitSprite)
+    BananaSprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . e . 
+        . . . . . . . . . . . . . 5 e . 
+        . . . . . . . . . . . . 5 5 e . 
+        . . . . . . . . . . . . 5 5 e . 
+        . . . . . . . . . . . 5 5 5 . . 
+        . . . . . . . . . . 5 5 5 5 . . 
+        . . . . . . . 5 5 5 5 5 5 5 . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . 5 5 5 5 5 5 5 5 . . . . . 
+        e e 5 5 5 5 5 5 5 5 . . . . . . 
+        . . . 5 5 5 5 5 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.FruitSprite)
+    StrawBerrySprite = sprites.create(img`
+        . . . . . . . 6 . . . . . . . . 
+        . . . . . . 8 6 6 . . . 6 8 . . 
+        . . . e e e 8 8 6 6 . 6 7 8 . . 
+        . . e 2 2 2 2 e 8 6 6 7 6 . . . 
+        . e 2 2 4 4 2 7 7 7 7 7 8 6 . . 
+        . e 2 4 4 2 6 7 7 7 6 7 6 8 8 . 
+        e 2 4 5 2 2 6 7 7 6 2 7 7 6 . . 
+        e 2 4 4 2 2 6 7 6 2 2 6 7 7 6 . 
+        e 2 4 2 2 2 6 6 2 2 2 e 7 7 6 . 
+        e 2 4 2 2 4 2 2 2 4 2 2 e 7 6 . 
+        e 2 4 2 2 2 2 2 2 2 2 2 e c 6 . 
+        e 2 2 2 2 2 2 2 4 e 2 e e c . . 
+        e e 2 e 2 2 4 2 2 e e e c . . . 
+        e e e e 2 e 2 2 e e e c . . . . 
+        e e e 2 e e c e c c c . . . . . 
+        . c c c c c c c . . . . . . . . 
+        `, SpriteKind.FruitSprite)
+    GrapeSprite = sprites.create(img`
+        . f 3 3 a a f 7 7 7 7 7 7 7 7 7 
+        . f 3 a a a a f 7 f 7 7 7 7 7 f 
+        . f a a a a a f 7 f f 7 7 7 f f 
+        f f f a a a f a f a f 7 7 7 f . 
+        3 3 a f f f f f f a a f 7 f . . 
+        3 a a a f 3 3 a f f f f f f f . 
+        a a a a f 3 a a a a f a a a a f 
+        a a a a f 3 a a a a f a a a a a 
+        a a a f f a a a a e f a a a a a 
+        f f f f f f a a e f f a a a a e 
+        . f 3 3 a f f f f f f f a a e f 
+        f 3 3 a a a f a a a a f f f f . 
+        f 3 a a a a f a a a a a f . . . 
+        f a a a a a f a a a a a f . . . 
+        . f a a a f f a a a a e f . . . 
+        . . f f f f f f a a e f . . . . 
+        `, SpriteKind.FruitSprite)
+    FruitsArray = [
+    sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . f 7 . . . . 
+        . . . . . . . . . 2 3 f 7 . . . 
+        . . . . . . . . 2 2 3 3 f 7 . . 
+        . . . . . . . 2 2 2 2 1 f 7 . . 
+        . . . . . . 2 2 f 2 2 1 f 7 . . 
+        . . . . . 2 2 2 2 2 2 1 f 7 . . 
+        . . . . . 2 2 2 f 2 2 1 f 7 . . 
+        . . . . 2 2 2 2 2 2 3 1 f 7 . . 
+        . . . 2 2 2 f 2 2 2 1 f 7 . . . 
+        . . f 3 3 2 2 2 3 1 f 7 7 . . . 
+        . . 7 f 3 1 1 1 1 f 7 7 . . . . 
+        . . . 7 f f f f f 7 7 . . . . . 
+        . . . . . 7 7 7 7 7 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.FruitSprite),
+    sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . 7 . . . . . . 
+        . . . . . . . . 7 . . . . . . . 
+        . . . . . . . . 7 . . . . . . . 
+        . . . . . . . 7 7 . . . . . . . 
+        . . . . 2 2 2 7 7 2 2 2 . . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . 2 2 2 2 2 2 2 2 2 2 2 2 . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 2 2 2 . . . 
+        . . . . 2 2 2 2 2 2 2 2 . . . . 
+        . . . . . 2 2 . . 2 2 . . . . . 
+        `, SpriteKind.FruitSprite),
+    sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . e . 
+        . . . . . . . . . . . . . 5 e . 
+        . . . . . . . . . . . . 5 5 e . 
+        . . . . . . . . . . . . 5 5 e . 
+        . . . . . . . . . . . 5 5 5 . . 
+        . . . . . . . . . . 5 5 5 5 . . 
+        . . . . . . . 5 5 5 5 5 5 5 . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . . . . 5 5 5 5 5 5 5 . . . 
+        . . . 5 5 5 5 5 5 5 5 . . . . . 
+        e e 5 5 5 5 5 5 5 5 . . . . . . 
+        . . . 5 5 5 5 5 . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.FruitSprite),
+    sprites.create(img`
+        . . . . . . . 6 . . . . . . . . 
+        . . . . . . 8 6 6 . . . 6 8 . . 
+        . . . e e e 8 8 6 6 . 6 7 8 . . 
+        . . e 2 2 2 2 e 8 6 6 7 6 . . . 
+        . e 2 2 4 4 2 7 7 7 7 7 8 6 . . 
+        . e 2 4 4 2 6 7 7 7 6 7 6 8 8 . 
+        e 2 4 5 2 2 6 7 7 6 2 7 7 6 . . 
+        e 2 4 4 2 2 6 7 6 2 2 6 7 7 6 . 
+        e 2 4 2 2 2 6 6 2 2 2 e 7 7 6 . 
+        e 2 4 2 2 4 2 2 2 4 2 2 e 7 6 . 
+        e 2 4 2 2 2 2 2 2 2 2 2 e c 6 . 
+        e 2 2 2 2 2 2 2 4 e 2 e e c . . 
+        e e 2 e 2 2 4 2 2 e e e c . . . 
+        e e e e 2 e 2 2 e e e c . . . . 
+        e e e 2 e e c e c c c . . . . . 
+        . c c c c c c c . . . . . . . . 
+        `, SpriteKind.FruitSprite),
+    sprites.create(img`
+        . f 3 3 a a f 7 7 7 7 7 7 7 7 7 
+        . f 3 a a a a f 7 f 7 7 7 7 7 f 
+        . f a a a a a f 7 f f 7 7 7 f f 
+        f f f a a a f a f a f 7 7 7 f . 
+        3 3 a f f f f f f a a f 7 f . . 
+        3 a a a f 3 3 a f f f f f f f . 
+        a a a a f 3 a a a a f a a a a f 
+        a a a a f 3 a a a a f a a a a a 
+        a a a f f a a a a e f a a a a a 
+        f f f f f f a a e f f a a a a e 
+        . f 3 3 a f f f f f f f a a e f 
+        f 3 3 a a a f a a a a f f f f . 
+        f 3 a a a a f a a a a a f . . . 
+        f a a a a a f a a a a a f . . . 
+        . f a a a f f a a a a e f . . . 
+        . . f f f f f f a a e f . . . . 
+        `, SpriteKind.FruitSprite)
+    ]
+    while (TimeGoingVariable == true) {
+        FuitSpritePickerVariable = randint(1, 5)
+        FruitSpawnLocationNumber = randint(0, tiles.getTilesByType(assets.tile`myTile23`).length)
+        FallingFruit = FruitsArray[FuitSpritePickerVariable]
+        tiles.placeOnTile(FallingFruit, tiles.getTilesByType(assets.tile`myTile23`)[FruitSpawnLocationNumber])
+        pause(500)
+    }
+}
 function VegTitleReplacement () {
     for (let value of tiles.getTilesByType(assets.tile`VegSpawnHeroTile`)) {
         VegRocks = sprites.create(img`
@@ -1011,6 +1520,22 @@ function VegRyeBreadOnMeal5 () {
     VegRyeBreadOnMeal2.scale = 1
     sprites.destroy(VegRyeBread2)
 }
+function SpawnProtienFoods () {
+	
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
+    CheckDairyAnswer(false)
+    if (Correct_Answers >= 5) {
+        game.splash("Well Done!")
+        DairyGameCompleted = true
+    }
+    if (DairyGameCompleted == true && FruitGameCompleted == true) {
+        StartProtienGame()
+    }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile27`, function (sprite, location) {
+    CheckDairyAnswer(true)
+})
 function VegOnionOnMeal2 () {
     VegOnionOnMeal = sprites.create(img`
         ................................................................................
@@ -1200,6 +1725,21 @@ function StartFruitGame () {
     controller.moveSprite(VegHero, 100, 0)
     VegHero.ay = 1
     info.startCountdown(60)
+    TimeGoingVariable = true
+    FruitsCollected = 0
+    SpawnFruits()
+    game.showLongText("Did you know that you should eat 2 cups of fruit a day or 400 grams of fruit", DialogLayout.Bottom)
+    if (FruitsCollected >= 5) {
+        game.showLongText("You collected enough for a healthy day!", DialogLayout.Bottom)
+    }
+    FruitGameCompleted = true
+    ClearScreen()
+    tiles.setCurrentTilemap(tilemap`level2`)
+    VegCallVeg()
+    Nutrition()
+    VegTitleReplacement()
+    SpawnVegHero()
+    VegReturnItems()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.VegCarrotKind, function (sprite, otherSprite) {
     VegCarrotOnMeal()
@@ -1258,6 +1798,23 @@ function VegWheatBread () {
 let VegOnionOnMeal: Sprite = null
 let VegRyeBreadOnMeal2: Sprite = null
 let VegRocks: Sprite = null
+let FallingFruit: Sprite = null
+let FruitSpawnLocationNumber = 0
+let FuitSpritePickerVariable = 0
+let TimeGoingVariable = false
+let FruitsArray: Sprite[] = []
+let GrapeSprite: Sprite = null
+let StrawBerrySprite: Sprite = null
+let BananaSprite: Sprite = null
+let AppleSprite: Sprite = null
+let WaterMelonSprite: Sprite = null
+let RandomDairyList: string[] = []
+let MilkList: string[] = []
+let CowArrayIndex = 0
+let CowArray: Sprite[] = []
+let RandomCowSprite: Sprite = null
+let IceCreamCowSprite: Sprite = null
+let MilkCowSprite: Sprite = null
 let VegDairyDoorLabel: Sprite = null
 let VegFuitDoorLabel: Sprite = null
 let VegClearItems: Sprite = null
@@ -1265,9 +1822,14 @@ let VegRyeBread2: Sprite = null
 let VegChangeCamera: Sprite = null
 let VegTomatoOnMeal1: Sprite = null
 let VegCarrotOnMeal1: Sprite = null
+let FruitGameCompleted = false
+let DairyGameCompleted = false
+let Correct_Answers = 0
+let ChosenDairy = ""
 let VegWheatBreadOnMeal: Sprite = null
 let VegLettuceOnMeal1: Sprite = null
 let VegWhiteBreadOnMeal: Sprite = null
+let FruitsCollected = 0
 let VegPotatoOnMeal2: Sprite = null
 let VegHero: Sprite = null
 let VegCalories: number[] = []
