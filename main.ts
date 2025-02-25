@@ -561,6 +561,7 @@ function StartProtienGame () {
         7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
         7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
         `)
+    SpawnProtienFoods()
 }
 function VegCarrotOnMeal () {
     VegCarrotOnMeal1 = sprites.create(img`
@@ -1521,7 +1522,79 @@ function VegRyeBreadOnMeal5 () {
     sprites.destroy(VegRyeBread2)
 }
 function SpawnProtienFoods () {
-	
+    BeefCowSprite = sprites.create(img`
+        ................................
+        ................................
+        ................................
+        ..............ffffff............
+        ...........fffeeee11fff.........
+        ...........fffeeee11fff.........
+        ........fff111eeee11111fff......
+        .......f1111eeeeeee11111eef.....
+        ......feeeeefffeeeefffeeeeef....
+        ......feeeef55feeeef55feeeef....
+        ......feeeef55feeeef55feeeef....
+        ....ffefffff55ffffff55fffffeff..
+        ....fffeeeeeeeeeeeeeeeeeeeefff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffe3333eeeeeeeeee3333efff..
+        ....fffeeeeeeeee11eeeeeeeeefff..
+        ....ffeffffeeefe11efeeeffffeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeeefeeef1111feeefeeeeff..
+        ....ffeeff12221111112221ffeeff..
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        ......feff13333333333331ffef....
+        .......fff1333f3333f3331fff.....
+        ........fff333333333333fff......
+        ........ffffffffffffffffff......
+        ..........feeef....feeef........
+        ..........feeef....feeef........
+        ...........ffff....ffff.........
+        ................................
+        ................................
+        `, SpriteKind.Player)
+    ChickenSprite = sprites.create(img`
+        . . . . . . e e e e . . . . . . 
+        . . . . . e 2 2 2 e . . . . . . 
+        . . . . e 2 2 e e . . . . . . . 
+        . . . e d d d d e . . . . . . . 
+        . . e d f e f d d e . e e e e . 
+        . . e d f e f e d e e d d d d e 
+        . e 5 5 d e d e e e d d d d d e 
+        . . e d d e e e e d e e e d e . 
+        . e d d d e e e e d d e e d d e 
+        e d d e d d d e e e d d e d d e 
+        e d d e e d d e e d e e d d e . 
+        e d d d e d d d e d d d d d e . 
+        . e d d e e d d d d d d d e . . 
+        . . e e d d d d d d d d e e . . 
+        . . . e e d d d e e d e e . . . 
+        . . e 5 5 5 e 5 5 5 e . . . . . 
+        `, SpriteKind.Player)
+    FishSprte = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . c c c c . . . . 
+        . . . . . . c c d d d d c . . . 
+        . . . . . c c c c c c d c . . . 
+        . . . . c c 4 4 4 4 d c c . . . 
+        . . . c 4 d 4 4 4 4 4 1 c . c c 
+        . . c 4 4 4 1 4 4 4 4 d 1 c 4 c 
+        . c 4 4 4 4 1 4 4 4 4 4 1 c 4 c 
+        f 4 4 4 4 4 1 4 4 4 4 4 1 4 4 f 
+        f 4 4 4 f 4 1 c c 4 4 4 1 f 4 f 
+        f 4 4 4 4 4 1 4 4 f 4 4 d f 4 f 
+        . f 4 4 4 4 1 c 4 f 4 d f f f f 
+        . . f f 4 d 4 4 f f 4 c f c . . 
+        . . . . f f 4 4 4 4 c d b c . . 
+        . . . . . . f f f f d d d c . . 
+        . . . . . . . . . . c c c . . . 
+        `, SpriteKind.Player)
+    BeefCowSprite.setVelocity(randint(-50, 50), randint(-50, 50))
+    ChickenSprite.setVelocity(randint(-50, 50), randint(-50, 50))
+    FishSprte.setVelocity(randint(-50, 50), randint(-50, 50))
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
     CheckDairyAnswer(false)
@@ -1796,6 +1869,9 @@ function VegWheatBread () {
     VegWheatBread1.scale = 0.3
 }
 let VegOnionOnMeal: Sprite = null
+let FishSprte: Sprite = null
+let ChickenSprite: Sprite = null
+let BeefCowSprite: Sprite = null
 let VegRyeBreadOnMeal2: Sprite = null
 let VegRocks: Sprite = null
 let FallingFruit: Sprite = null
