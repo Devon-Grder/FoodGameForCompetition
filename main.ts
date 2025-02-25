@@ -12,6 +12,7 @@ namespace SpriteKind {
     export const VegPotatoesKind = SpriteKind.create()
     export const VegWheatBreadKind = SpriteKind.create()
     export const VegRyeBread = SpriteKind.create()
+    export const DoorLabel = SpriteKind.create()
 }
 function Nutrition () {
     VegTotalCalories = 0
@@ -495,6 +496,9 @@ function VegWhiteBread () {
     tiles.placeOnTile(VegWhiteBread1, tiles.getTileLocation(1, 10))
     VegWhiteBread1.scale = 0.3
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`VegSpawnHeroTile0`, function (sprite, location) {
+    StartFruitGame()
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     characterAnimations.loopFrames(
     VegHero,
@@ -661,6 +665,7 @@ function VegCallVeg () {
     VegWhiteBread()
     VegWheatBread()
     VegRyeBread1()
+    VegDoorsLabels()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.VegReturnItemsKind, function (sprite, otherSprite) {
     VegCallVeg()
@@ -690,6 +695,46 @@ function VegOnion () {
         `, SpriteKind.VegOnionKind)
     tiles.placeOnTile(VegOnion1, tiles.getTileLocation(10, 8))
     VegOnion1.scale = 0.5
+}
+function VegDoorsLabels () {
+    VegFuitDoorLabel = sprites.create(img`
+        . . . . . . . 6 . . . . . . . . 
+        . . . . . . 8 6 6 . . . 6 8 . . 
+        . . . e e e 8 8 6 6 . 6 7 8 . . 
+        . . e 2 2 2 2 e 8 6 6 7 6 . . . 
+        . e 2 2 4 4 2 7 7 7 7 7 8 6 . . 
+        . e 2 4 4 2 6 7 7 7 6 7 6 8 8 . 
+        e 2 4 5 2 2 6 7 7 6 2 7 7 6 . . 
+        e 2 4 4 2 2 6 7 6 2 2 6 7 7 6 . 
+        e 2 4 2 2 2 6 6 2 2 2 e 7 7 6 . 
+        e 2 4 2 2 4 2 2 2 4 2 2 e 7 6 . 
+        e 2 4 2 2 2 2 2 2 2 2 2 e c 6 . 
+        e 2 2 2 2 2 2 2 4 e 2 e e c . . 
+        e e 2 e 2 2 4 2 2 e e e c . . . 
+        e e e e 2 e 2 2 e e e c . . . . 
+        e e e 2 e e c e c c c . . . . . 
+        . c c c c c c c . . . . . . . . 
+        `, SpriteKind.DoorLabel)
+    tiles.placeOnTile(VegFuitDoorLabel, tiles.getTileLocation(1, 14))
+    VegDairyDoorLabel = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . f d d 1 1 1 1 f . . . . 
+        . . . . f f f f f f f f . . . . 
+        . . . . . f d d d d f . . . . . 
+        . . . . . f d d 1 1 f . . . . . 
+        . . . . . f d d 1 1 f . . . . . 
+        . . . . f d d 1 1 1 1 f . . . . 
+        . . . f d d 1 1 1 1 1 1 f . . . 
+        . . . f d d 1 1 1 1 1 1 f . . . 
+        . . f f f f f f f f f f f f . . 
+        . . f d d 1 1 1 1 1 1 1 1 f . . 
+        . . f d 1 1 1 1 1 1 1 1 1 f . . 
+        . . f f f f f f f f f f f f . . 
+        . . f d d 1 1 1 1 1 1 1 1 f . . 
+        . . . f f f f f f f f f f . . . 
+        `, SpriteKind.DoorLabel)
+    tiles.placeOnTile(VegDairyDoorLabel, tiles.getTileLocation(10, 14))
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     characterAnimations.loopFrames(
@@ -779,6 +824,21 @@ function VegCarrot () {
         `, SpriteKind.VegCarrotKind)
     tiles.placeOnTile(VegCarrot1, tiles.getTileLocation(10, 12))
     VegCarrot1.scale = 0.5
+}
+function StartScreen () {
+    game.showLongText("Welcome to Food Fest!", DialogLayout.Center)
+    pause(100)
+    game.showLongText("You will be partaking in 4 games to learn about how different foods affect your body", DialogLayout.Center)
+    pause(100)
+    game.showLongText("First You will learn about Grains and vegetables in a sandwich building mini-game", DialogLayout.Center)
+    pause(100)
+    game.showLongText("Then you will have to catch the correct fruits to learn about each one", DialogLayout.Center)
+    pause(100)
+    game.showLongText("Following you will milk cows and place the corresponding dairy food in healthy or unhealthy categories", DialogLayout.Center)
+    pause(100)
+    game.showLongText("Finally you will have to chose the correct protein source in a hunting style point and click game.", DialogLayout.Center)
+    pause(100)
+    game.showLongText("Good Luck!", DialogLayout.Center)
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     characterAnimations.loopFrames(
@@ -989,6 +1049,13 @@ function VegOnionOnMeal2 () {
     VegOnion1.scale = 1
     sprites.destroy(VegOnion1)
 }
+function StartFruitGame () {
+    tiles.setCurrentTilemap(tilemap`level4`)
+    SpawnVegHero()
+    tiles.placeOnTile(VegHero, tiles.getTileLocation(8, 15))
+    controller.moveSprite(VegHero, 100, 0)
+    info.startCountdown(45)
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.VegCarrotKind, function (sprite, otherSprite) {
     VegCarrotOnMeal()
     VegChangeCalories(VegCalories[3])
@@ -1046,6 +1113,8 @@ function VegWheatBread () {
 let VegOnionOnMeal: Sprite = null
 let VegRyeBreadOnMeal2: Sprite = null
 let VegRocks: Sprite = null
+let VegDairyDoorLabel: Sprite = null
+let VegFuitDoorLabel: Sprite = null
 let VegClearItems: Sprite = null
 let VegRyeBread2: Sprite = null
 let VegChangeCamera: Sprite = null
@@ -1066,6 +1135,7 @@ let VegTomato: Sprite = null
 let VegLettuce1: Sprite = null
 let VegList: Sprite[] = []
 let VegTotalCalories = 0
+StartScreen()
 tiles.setCurrentTilemap(tilemap`level2`)
 VegCallVeg()
 Nutrition()
